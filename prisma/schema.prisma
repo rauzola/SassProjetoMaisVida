@@ -52,13 +52,13 @@ model Comunidade {
 model Saude {
   id                    Int     @id @default(autoincrement())
   userId                String  @unique
-  portadorDoenca        Boolean
+  portadorDoenca        Boolean @default(false)
   doencas               String?
-  alergias              Boolean
+  alergias              Boolean @default(false)
   alergiasDetalhe       String?
-  medicacao             Boolean
+  medicacao             Boolean @default(false)
   medicamentos          String?
-  planoSaude            Boolean
+  planoSaude            Boolean @default(false)
   operadoraPlano        String?
   numeroInscricaoPlano  String?
   User                  User    @relation(fields: [userId], references: [id])
