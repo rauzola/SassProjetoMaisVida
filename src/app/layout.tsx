@@ -1,6 +1,12 @@
+// /app/layout.tsx
+
+"use client"
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Menu } from "@/components/Menu"; // Importando o Menu (componente cliente)
+import { usePathname } from "next/navigation"; // Importando usePathname para verificar a rota atual
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,21 +18,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Projeto Mais Vida",
-  description: "Sistema Sass do Projeto Mais VIda",
-};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname(); // Obtendo a rota atual
+
+  // Definindo as rotas onde o Menu não deve ser exibido
+  const hideMenuRoutes = ["/login", "/cadastro"];
+
+  // Verificando se o Menu deve ser exibido
+  const shouldShowMenu = !hideMenuRoutes.includes(pathname);
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {shouldShowMenu && <Menu />} {/* Renderiza o Menu apenas se shouldShowMenu for true */}
         {children}
       </body>
     </html>

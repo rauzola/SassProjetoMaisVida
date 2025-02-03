@@ -1,3 +1,5 @@
+// /components/Menu/app-sidebar.tsx
+
 "use client"
 
 import * as React from "react"
@@ -49,12 +51,12 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Perfil",
+          url: "/perfil",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Acount",
+          url: "/acount",
         },
         {
           title: "Settings",

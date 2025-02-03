@@ -1,3 +1,5 @@
+// /components/Menu/nav-user.tsx
+
 "use client";
 
 import {
@@ -8,6 +10,7 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
+import Link from "next/link"; // Importe o Link do Next.js
 
 import {
   Avatar,
@@ -29,7 +32,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Link from "next/link"; // Importe o Link do Next.js
 
 export function NavUser({
   user,
@@ -42,14 +44,13 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
 
-  // Função para chamar a rota de logout
   async function handleLogout() {
     const res = await fetch("/api/logout", {
-      method: "DELETE", // Utiliza DELETE para chamar a rota de logout
+      method: "DELETE",
     });
 
     if (res.ok) {
-      window.location.href = "/login"; // Redireciona para a página de login após o logout
+      window.location.href = "/login";
     }
   }
 
@@ -93,7 +94,6 @@ export function NavUser({
             </DropdownMenuLabel>
 
             <DropdownMenuGroup>
-              {/* Link para a página de conta */}
               <Link href="/perfil" passHref>
                 <DropdownMenuItem className="cursor-pointer">
                   <BadgeCheck className="mr-2 h-4 w-4" />
@@ -104,7 +104,6 @@ export function NavUser({
 
             <DropdownMenuSeparator />
 
-            {/* Item de logout */}
             <DropdownMenuItem onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>

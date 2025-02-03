@@ -54,7 +54,7 @@ export function LoginForm() {
           });
 
           // se chegar aqui, o login deu certo
-          router.push("/autenticado");
+          router.push("/");
 
           setFormLoading(false);
           setFormSuccess(true);

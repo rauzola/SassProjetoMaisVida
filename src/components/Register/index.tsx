@@ -177,7 +177,7 @@ export function RegisterForm() {
             password2: pass2,
           });
 
-          router.push("/autenticado");
+          router.push("/");
           setFormLoading(false);
           setFormSuccess(true);
         } catch (error) {
