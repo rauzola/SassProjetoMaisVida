@@ -17,19 +17,19 @@ datasource db {
 
 model User {
   id                        String   @id @default(cuid())
-  email                     String   @unique
+  status                    String   @default("ativo") // 'ativo', 'inativo'
   nome                      String
+  email                     String   @unique
+  cpf                       String   @unique
+  password                  String
   data_nascimento           DateTime
   estado_civil              String
   profissao                 String
   telefone_contato          String
   contato_emergencia        String
   telefone_contato_emergencia String
-  cpf                       String   @unique
   tamanho_camiseta          String
-  status                    String   @default("ativo") // 'ativo', 'inativo'
   tipo_usuario              String   @default("campista") // 'campista', 'equipe', 'admin'
-  password                  String
   data_criacao              DateTime @default(now())
   Saude                     Saude?
   Inscricoes                Inscricao[]
@@ -46,7 +46,7 @@ model Comunidade {
   dataAcampa2   DateTime?
   dataEnvio     DateTime?
   assessores    String   // Nomes dos assessores
-  Membros       User[]   @relation(references: [id])
+  Membros       User[]   // Relacionamento com usuários (não precisa do @relation)
 }
 
 model Saude {
