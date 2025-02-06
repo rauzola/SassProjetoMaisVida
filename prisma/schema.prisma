@@ -65,7 +65,7 @@ model Saude {
 }
 
 model Evento {
-  id          Int      @id @default(autoincrement())
+  id          String    @id @default(cuid())
   nome        String
   descricao   String
   dataInicio  DateTime
@@ -77,14 +77,14 @@ model Evento {
 }
 
 model Inscricao {
-  id         Int      @id @default(autoincrement())
-  userId     String
-  eventoId   Int
-  status     String   @default("pendente") // 'pendente', 'confirmada', 'cancelada'
+  id            Int      @id @default(autoincrement())
+  userId        String
+  eventoId      String   // Alterado para String
+  status        String   @default("pendente") // 'pendente', 'confirmada', 'cancelada'
   dataInscricao DateTime @default(now())
-  User       User    @relation(fields: [userId], references: [id])
-  Evento     Evento  @relation(fields: [eventoId], references: [id])
-  Presencas  Presenca[]
+  User          User     @relation(fields: [userId], references: [id])
+  Evento        Evento   @relation(fields: [eventoId], references: [id])
+  Presencas     Presenca[]
 }
 
 model Presenca {

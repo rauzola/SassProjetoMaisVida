@@ -14,8 +14,8 @@ export async function POST(req: NextRequest) {
         nome,
         descricao,
         dataInicio: new Date(dataInicio),
-        horaInicio: new Date(`${dataInicio}T${horaInicio}:00.000Z`),
-        horaFim: new Date(`${dataInicio}T${horaFim}:00.000Z`),
+        horaInicio: new Date(`${dataInicio}T${horaInicio}`),
+        horaFim: new Date(`${dataInicio}T${horaFim}`),
         local,
       },
     });

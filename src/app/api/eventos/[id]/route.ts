@@ -1,4 +1,4 @@
-// /app/api/eventos/[id]/route.ts
+// /app/api/eventos/[id]route.ts
 
 import { PrismaGetInstance } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,7 +8,7 @@ const prisma = PrismaGetInstance();
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const evento = await prisma.evento.findUnique({
-      where: { id: Number(params.id) },
+      where: { id: params.id },
     });
 
     if (!evento) {

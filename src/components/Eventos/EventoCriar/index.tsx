@@ -11,11 +11,27 @@ export function EventoCriar() {
   const [horaInicio, setHoraInicio] = useState("");
   const [horaFim, setHoraFim] = useState("");
   const [local, setLocal] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false); // Estado para controlar a mensagem de sucesso
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Verifica se todos os campos estão preenchidos
+    if (
+      !nome ||
+      !descricao ||
+      !dataInicio ||
+      !horaInicio ||
+      !horaFim ||
+      !local
+    ) {
+      setError("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
     try {
-      await axios.post("/api/eventos", {
+      const response = await axios.post("/api/eventos", {
         nome,
         descricao,
         dataInicio,
@@ -23,9 +39,16 @@ export function EventoCriar() {
         horaFim,
         local,
       });
-      alert("Evento criado com sucesso!");
-    } catch {
-      alert("Erro ao criar evento");
+
+      if (response.status === 201) {
+        setSuccess(true);
+        setError("");
+      } else {
+        setError("Ocorreu um erro ao criar o evento.");
+      }
+    } catch (error) {
+      console.error("Erro ao criar evento:", error);
+      setError("Erro ao criar evento. Tente novamente.");
     }
   };
 
@@ -63,18 +86,72 @@ export function EventoCriar() {
           value={horaFim}
           onChange={(e) => setHoraFim(e.target.value)}
         />
-        <input
-          className="w-full p-2 border rounded"
-          placeholder="Local"
-          value={local}
-          onChange={(e) => setLocal(e.target.value)}
-        />
+
+        {/* Radio buttons para os locais */}
+        <div className="space-y-2">
+          <p className="font-semibold">Escolha o local</p>
+          <label className="block">
+            <input
+              type="radio"
+              name="local"
+              value="Mosteiro Projeto Mais Vida"
+              checked={local === "Mosteiro Projeto Mais Vida"}
+              onChange={(e) => setLocal(e.target.value)}
+              className="mr-2"
+            />
+            Mosteiro Projeto Mais Vida
+          </label>
+          <label className="block">
+            <input
+              type="radio"
+              name="local"
+              value="Dona Guilhermina"
+              checked={local === "Dona Guilhermina"}
+              onChange={(e) => setLocal(e.target.value)}
+              className="mr-2"
+            />
+            Dona Guilhermina
+          </label>
+          <label className="block">
+            <input
+              type="radio"
+              name="local"
+              value="Catedral - Maringá"
+              checked={local === "Catedral - Maringá"}
+              onChange={(e) => setLocal(e.target.value)}
+              className="mr-2"
+            />
+            Catedral - Maringá
+          </label>
+          <label className="block">
+            <input
+              type="radio"
+              name="local"
+              value="Fazenda Astroga"
+              checked={local === "Fazenda Astroga"}
+              onChange={(e) => setLocal(e.target.value)}
+              className="mr-2"
+            />
+            Fazenda Astroga
+          </label>
+        </div>
+
+        {/* Exibe a mensagem de erro se houver algum campo vazio */}
+        {error && <p className="text-red-500">{error}</p>}
+
         <button
           type="submit"
           className="w-full bg-blue-500 text-white p-2 rounded"
         >
           Criar Evento
         </button>
+
+        {/* Exibe mensagem de sucesso após criação */}
+        {success && (
+          <div className="mt-4 text-green-500">
+            <p>Evento criado com sucesso!</p>
+          </div>
+        )}
       </form>
     </div>
   );
