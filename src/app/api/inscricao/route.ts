@@ -5,12 +5,13 @@ const prisma = PrismaGetInstance();
 
 export async function POST(req: NextRequest) {
   try {
-    const { eventoId, userId } = await req.json();
+    const { eventoId } = await req.json();
+    const userId = "id-do-usuario"; // Substituir pelo ID do usuário autenticado
 
     const inscricao = await prisma.inscricao.create({
       data: {
-        eventoId,
         userId,
+        eventoId,
       },
     });
 
