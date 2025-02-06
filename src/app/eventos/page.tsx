@@ -1,5 +1,6 @@
-// /app/perfil/page.tsx
+// /app/eventos/page.tsx
 
+import { EventosListar } from "@/components/Eventos";
 import { AppSidebar } from "@/components/Menu/app-sidebar";
 import {
   Breadcrumb,
@@ -19,24 +20,23 @@ import { PrismaGetInstance } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function Evento() {
+export default async function Eventos() {
+  const cookieStore = await cookies();
+  const authCookie = cookieStore.get("auth-session");
 
-    const cookieStore = await cookies();
-    const authCookie = cookieStore.get("auth-session");
-  
-    if (!authCookie?.value) {
-      redirect("/login");
-    }
-  
-    const sessionToken = authCookie.value;
-    const prisma = PrismaGetInstance();
-    const session = await prisma.sessions.findFirst({
-      where: { token: sessionToken },
-    });
-  
-    if (!session || !session.valid || session.expiresAt < new Date()) {
-      redirect("/login");
-    }
+  if (!authCookie?.value) {
+    redirect("/login");
+  }
+
+  const sessionToken = authCookie.value;
+  const prisma = PrismaGetInstance();
+  const session = await prisma.sessions.findFirst({
+    where: { token: sessionToken },
+  });
+
+  if (!session || !session.valid || session.expiresAt < new Date()) {
+    redirect("/login");
+  }
 
   return (
     <SidebarProvider>
@@ -61,7 +61,7 @@ export default async function Evento() {
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-            
+            <EventosListar />
           </div>
         </div>
       </SidebarInset>
