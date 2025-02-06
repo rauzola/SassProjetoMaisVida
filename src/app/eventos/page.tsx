@@ -1,7 +1,7 @@
 // /app/perfil/index.tsx
 
+import { Eventos } from "@/components/Eventos";
 import { AppSidebar } from "@/components/Menu/app-sidebar";
-import { PerfilUser } from "@/components/Perfil";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -21,22 +21,23 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function Perfil() {
-  const cookieStore = await cookies();
-  const authCookie = cookieStore.get("auth-session");
 
-  if (!authCookie?.value) {
-    redirect("/login");
-  }
-
-  const sessionToken = authCookie.value;
-  const prisma = PrismaGetInstance();
-  const session = await prisma.sessions.findFirst({
-    where: { token: sessionToken },
-  });
-
-  if (!session || !session.valid || session.expiresAt < new Date()) {
-    redirect("/login");
-  }
+    const cookieStore = await cookies();
+    const authCookie = cookieStore.get("auth-session");
+  
+    if (!authCookie?.value) {
+      redirect("/login");
+    }
+  
+    const sessionToken = authCookie.value;
+    const prisma = PrismaGetInstance();
+    const session = await prisma.sessions.findFirst({
+      where: { token: sessionToken },
+    });
+  
+    if (!session || !session.valid || session.expiresAt < new Date()) {
+      redirect("/login");
+    }
 
   return (
     <SidebarProvider>
@@ -53,7 +54,7 @@ export default async function Perfil() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Perfil</BreadcrumbPage>
+                  <BreadcrumbPage>Evento</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -61,7 +62,7 @@ export default async function Perfil() {
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-            <PerfilUser />
+            <Eventos />
           </div>
         </div>
       </SidebarInset>

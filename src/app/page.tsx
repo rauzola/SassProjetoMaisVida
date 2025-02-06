@@ -3,7 +3,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { PrismaGetInstance } from "@/lib/prisma";
-import { Menu } from "@/components/Menu"; // Importando o Menu (componente cliente)
 
 import {
   Breadcrumb,

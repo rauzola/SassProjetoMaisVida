@@ -45,18 +45,18 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Eventos",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "Perfil",
-          url: "/perfil",
+          title: "Eventos",
+          url: "/eventos",
         },
         {
-          title: "Acount",
-          url: "/acount",
+          title: "Inscrever",
+          url: "/increver",
         },
         {
           title: "Settings",
@@ -112,8 +112,8 @@ const data = {
       icon: Settings2,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "Perfil",
+          url: "/perfil",
         },
         {
           title: "Team",
