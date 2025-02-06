@@ -21,23 +21,22 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function EventoCriar() {
+  const cookieStore = await cookies();
+  const authCookie = cookieStore.get("auth-session");
 
-    const cookieStore = await cookies();
-    const authCookie = cookieStore.get("auth-session");
-  
-    if (!authCookie?.value) {
-      redirect("/login");
-    }
-  
-    const sessionToken = authCookie.value;
-    const prisma = PrismaGetInstance();
-    const session = await prisma.sessions.findFirst({
-      where: { token: sessionToken },
-    });
-  
-    if (!session || !session.valid || session.expiresAt < new Date()) {
-      redirect("/login");
-    }
+  if (!authCookie?.value) {
+    redirect("/login");
+  }
+
+  const sessionToken = authCookie.value;
+  const prisma = PrismaGetInstance();
+  const session = await prisma.sessions.findFirst({
+    where: { token: sessionToken },
+  });
+
+  if (!session || !session.valid || session.expiresAt < new Date()) {
+    redirect("/login");
+  }
 
   return (
     <SidebarProvider>
@@ -53,8 +52,13 @@ export default async function EventoCriar() {
                   <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="/eventos">Eventos</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Evento</BreadcrumbPage>
+                  <BreadcrumbPage>criarEvento</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
