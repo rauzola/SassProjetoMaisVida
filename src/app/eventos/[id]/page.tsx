@@ -78,8 +78,12 @@ export default function EventoPage() {
                   <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="/eventos">Evento</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Evento</BreadcrumbPage>
+                  <BreadcrumbPage>{evento?.nome}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -110,31 +114,36 @@ export default function EventoPage() {
                     <div className="flex items-center gap-2">
                       <Calendar className="w-5 h-5 text-gray-600" />
                       <p className="text-sm text-gray-600">
-                        {new Date(evento.dataInicio).toLocaleDateString("pt-BR", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
+                        {new Date(evento.dataInicio).toLocaleDateString(
+                          "pt-BR",
+                          {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-    <Clock className="w-5 h-5 text-gray-600" />
-    <p className="text-sm text-gray-600">
-      <span className="font-bold">Horário de Início:</span>{" "}
-      {new Date(evento.horaInicio).toLocaleTimeString("pt-BR", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      })}{" "}
-      -{" "}
-      <span className="font-bold">Horário de Termino:</span>{" "}
-      {new Date(evento.horaFim).toLocaleTimeString("pt-BR", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      })}
-    </p>
-  </div>
+                      <Clock className="w-5 h-5 text-gray-600" />
+                      <p className="text-sm text-gray-600">
+                        <span className="font-bold">Horário de Início:</span>{" "}
+                        {new Date(evento.horaInicio).toLocaleTimeString(
+                          "pt-BR",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                          }
+                        )}{" "}
+                        - <span className="font-bold">Horário de Termino:</span>{" "}
+                        {new Date(evento.horaFim).toLocaleTimeString("pt-BR", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false,
+                        })}
+                      </p>
+                    </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="w-5 h-5 text-gray-600" />
                       <p className="text-sm text-gray-600">{evento.local}</p>
