@@ -5,10 +5,16 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = PrismaGetInstance();
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Record<string, string> }) {
   try {
+    const { id } = params; // Extraindo o id corretamente
+
+    if (!id) {
+      return NextResponse.json({ success: false, error: "ID do evento não fornecido" }, { status: 400 });
+    }
+
     const evento = await prisma.evento.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!evento) {
