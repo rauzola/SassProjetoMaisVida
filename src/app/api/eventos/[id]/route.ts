@@ -18,10 +18,10 @@ export interface Evento {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
-    const eventoId = params.id;
+    const { id: eventoId } = await context.params; // Aguardar `params`
 
     if (!eventoId) {
       return NextResponse.json(
