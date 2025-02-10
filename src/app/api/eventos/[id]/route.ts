@@ -1,28 +1,38 @@
+// /app/api/eventos/[id]/route.ts
+
 import { PrismaGetInstance } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = PrismaGetInstance();
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  try {
-    console.log("ID recebido na API:", params.id);
+export interface Evento {
+  id: string;
+  nome: string;
+  descricao: string;
+  dataInicio: Date;
+  horaInicio: Date;
+  horaFim: Date;
+  local: string;
+  status: string;
+}
 
-    if (!params.id) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+): Promise<NextResponse> {
+  try {
+    const eventoId = params.id;
+
+    if (!eventoId) {
       return NextResponse.json(
         { success: false, error: "ID do evento não foi fornecido" },
         { status: 400 }
       );
     }
 
-    // Busca o evento no banco de dados
     const evento = await prisma.evento.findUnique({
-      where: { id: params.id },
+      where: { id: eventoId },
     });
-
-    console.log("Evento encontrado:", evento);
 
     if (!evento) {
       return NextResponse.json(
@@ -35,7 +45,7 @@ export async function GET(
   } catch (error) {
     console.error("Erro ao buscar evento:", error);
     return NextResponse.json(
-      { success: false, error: `Erro ao buscar evento:` },
+      { success: false, error: "Erro ao buscar evento" },
       { status: 500 }
     );
   }

@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,21 +11,22 @@ interface Evento {
   id: string;
   nome: string;
   descricao: string;
-  dataInicio: string;
-  horaInicio: string;
-  horaFim: string;
+  dataInicio: Date;
+  horaInicio: Date;
+  horaFim: Date;
   local: string;
+  status: string;
 }
 
-export default function EventoDetalhes() {
-  const { id } = useParams();
+export default function EventoDetalhes(): JSX.Element {
+  const { id } = useParams<{ id: string }>();
   const [evento, setEvento] = useState<Evento | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchEvento = async () => {
-      setLoading(true); // Garante que o estado de carregamento seja atualizado no início
+    const fetchEvento = async (): Promise<void> => {
+      setLoading(true);
       try {
         if (!id) {
           throw new Error("ID do evento não foi fornecido");
@@ -71,11 +72,21 @@ export default function EventoDetalhes() {
         <CardTitle>{evento.nome}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p><strong>Descrição:</strong> {evento.descricao}</p>
-        <p><strong>Data:</strong> {new Date(evento.dataInicio).toLocaleDateString()}</p>
-        <p><strong>Hora de Início:</strong> {new Date(evento.horaInicio).toLocaleTimeString()}</p>
-        <p><strong>Hora de Término:</strong> {new Date(evento.horaFim).toLocaleTimeString()}</p>
-        <p><strong>Local:</strong> {evento.local}</p>
+        <p>
+          <strong>Descrição:</strong> {evento.descricao}
+        </p>
+        <p>
+          <strong>Data:</strong> {new Date(evento.dataInicio).toLocaleDateString()}
+        </p>
+        <p>
+          <strong>Hora de Início:</strong> {new Date(evento.horaInicio).toLocaleTimeString()}
+        </p>
+        <p>
+          <strong>Hora de Término:</strong> {new Date(evento.horaFim).toLocaleTimeString()}
+        </p>
+        <p>
+          <strong>Local:</strong> {evento.local}
+        </p>
       </CardContent>
     </Card>
   );
