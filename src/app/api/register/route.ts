@@ -1,3 +1,5 @@
+// /app/api/register/route.ts
+
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { PrismaGetInstance } from "@/lib/prisma";

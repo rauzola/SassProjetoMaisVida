@@ -3,9 +3,9 @@
 "use client";
 
 import { JSX, useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 interface Evento {
   id: string;
@@ -18,8 +18,12 @@ interface Evento {
   status: string;
 }
 
-export default function EventoDetalhes(): JSX.Element {
-  const { id } = useParams<{ id: string }>();
+interface EventoDetalhesProps {
+  eventoId: string;
+  userId: string;
+}
+
+export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps): JSX.Element {
   const [evento, setEvento] = useState<Evento | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,13 +32,13 @@ export default function EventoDetalhes(): JSX.Element {
     const fetchEvento = async (): Promise<void> => {
       setLoading(true);
       try {
-        if (!id) {
+        if (!eventoId) {
           throw new Error("ID do evento não foi fornecido");
         }
 
-        console.log("Buscando evento com ID:", id);
+        console.log("Buscando evento com ID:", eventoId);
 
-        const response = await fetch(`/api/eventos/${id}`);
+        const response = await fetch(`/api/eventos/${eventoId}`);
         await new Promise((resolve) => setTimeout(resolve, 500)); // Simula um pequeno delay (opcional)
 
         if (!response.ok) {
@@ -52,7 +56,33 @@ export default function EventoDetalhes(): JSX.Element {
     };
 
     fetchEvento();
-  }, [id]);
+  }, [eventoId]);
+
+  const handleInscricao = async (): Promise<void> => {
+    try {
+      const response = await fetch(`/api/eventos/${eventoId}/inscrever`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          eventoId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao realizar inscrição");
+      }
+
+      const data = await response.json();
+      console.log("Inscrição realizada com sucesso:", data);
+      alert("Inscrição realizada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao realizar inscrição:", error);
+      alert("Erro ao realizar inscrição");
+    }
+  };
 
   if (loading) {
     return <Skeleton className="h-40 w-full" />;
@@ -87,6 +117,7 @@ export default function EventoDetalhes(): JSX.Element {
         <p>
           <strong>Local:</strong> {evento.local}
         </p>
+        <Button onClick={handleInscricao}>Inscrever-se</Button>
       </CardContent>
     </Card>
   );

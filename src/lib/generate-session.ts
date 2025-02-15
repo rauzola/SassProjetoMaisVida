@@ -1,3 +1,5 @@
+// /src/lib/generate-session.ts
+
 import bcrypt from "bcrypt";
 
 interface GenerateSessionDTO {

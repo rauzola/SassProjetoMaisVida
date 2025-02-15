@@ -1,3 +1,5 @@
+// src/lib/auth.ts
+
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";

@@ -37,13 +37,13 @@ CREATE TABLE "Comunidade" (
 CREATE TABLE "Saude" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
-    "portadorDoenca" BOOLEAN NOT NULL,
+    "portadorDoenca" BOOLEAN NOT NULL DEFAULT false,
     "doencas" TEXT,
-    "alergias" BOOLEAN NOT NULL,
+    "alergias" BOOLEAN NOT NULL DEFAULT false,
     "alergiasDetalhe" TEXT,
-    "medicacao" BOOLEAN NOT NULL,
+    "medicacao" BOOLEAN NOT NULL DEFAULT false,
     "medicamentos" TEXT,
-    "planoSaude" BOOLEAN NOT NULL,
+    "planoSaude" BOOLEAN NOT NULL DEFAULT false,
     "operadoraPlano" TEXT,
     "numeroInscricaoPlano" TEXT,
 
@@ -52,7 +52,7 @@ CREATE TABLE "Saude" (
 
 -- CreateTable
 CREATE TABLE "Evento" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "nome" TEXT NOT NULL,
     "descricao" TEXT NOT NULL,
     "dataInicio" TIMESTAMP(3) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE "Evento" (
 CREATE TABLE "Inscricao" (
     "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
-    "eventoId" INTEGER NOT NULL,
+    "eventoId" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'pendente',
     "dataInscricao" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
