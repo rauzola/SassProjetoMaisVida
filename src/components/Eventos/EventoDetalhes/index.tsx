@@ -58,7 +58,10 @@ export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps
     fetchEvento();
   }, [eventoId]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleInscricao = async (): Promise<void> => {
+    setIsSubmitting(true);
     try {
       const response = await fetch(`/api/eventos/${eventoId}/inscrever`, {
         method: "POST",
@@ -67,20 +70,21 @@ export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps
         },
         body: JSON.stringify({
           userId,
-          eventoId,
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error("Erro ao realizar inscrição");
       }
-
+  
       const data = await response.json();
       console.log("Inscrição realizada com sucesso:", data);
       alert("Inscrição realizada com sucesso!");
     } catch (error) {
       console.error("Erro ao realizar inscrição:", error);
       alert("Erro ao realizar inscrição");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -117,7 +121,9 @@ export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps
         <p>
           <strong>Local:</strong> {evento.local}
         </p>
-        <Button onClick={handleInscricao}>Inscrever-se</Button>
+        <Button onClick={handleInscricao} disabled={isSubmitting}>
+  {isSubmitting ? "Inscrevendo..." : "Inscrever-se"}
+</Button>
       </CardContent>
     </Card>
   );

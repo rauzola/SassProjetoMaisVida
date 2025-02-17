@@ -5,15 +5,18 @@ import { NextResponse } from "next/server";
 
 const prisma = PrismaGetInstance();
 
-
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
-    const { userId } = await request.json();
-    const eventoId = params.id;
+    // Acessa os parâmetros de forma assíncrona
+    const { id: eventoId } = await params;
 
+    // Extrai o userId do corpo da requisição
+    const { userId } = await request.json();
+
+    // Validação dos dados
     if (!userId || !eventoId) {
       return NextResponse.json(
         { success: false, error: "Dados incompletos" },

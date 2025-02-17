@@ -23,8 +23,11 @@ import { redirect } from "next/navigation";
 export default async function Eventos({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const resolvedParams = await params; // Aguarda a resolução de params
+  const eventoId = resolvedParams.id;
+
   const cookieStore = await cookies();
   const authCookie = cookieStore.get("auth-session");
 
@@ -42,8 +45,6 @@ export default async function Eventos({
     redirect("/login");
   }
 
-  // Acesse o `params.id` diretamente (não é necessário `await`)
-  const eventoId = params.id;
 
   return (
     <SidebarProvider>
