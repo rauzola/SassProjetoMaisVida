@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Menu } from "@/components/Menu"; // Importando o Menu (componente cliente)
 import { usePathname } from "next/navigation"; // Importando usePathname para verificar a rota atual
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
       >
         {shouldShowMenu && <Menu />} {/* Renderiza o Menu apenas se shouldShowMenu for true */}
         {children}
+        <Toaster />
       </body>
     </html>
   );

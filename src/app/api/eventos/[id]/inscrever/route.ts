@@ -47,7 +47,7 @@ export async function POST(
     if (inscricaoExistente) {
       return NextResponse.json(
         { success: false, error: "Usuário já inscrito no evento" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 

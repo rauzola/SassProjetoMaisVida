@@ -6,6 +6,7 @@ import { JSX, useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast"; // Usar hook do toast
 
 interface Evento {
   id: string;
@@ -23,10 +24,15 @@ interface EventoDetalhesProps {
   userId: string;
 }
 
-export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps): JSX.Element {
+export default function EventoDetalhes({
+  eventoId,
+  userId,
+}: EventoDetalhesProps): JSX.Element {
   const [evento, setEvento] = useState<Evento | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { toast } = useToast(); // Usando o hook do toast para mostrar mensagens
 
   useEffect(() => {
     const fetchEvento = async (): Promise<void> => {
@@ -36,8 +42,6 @@ export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps
           throw new Error("ID do evento não foi fornecido");
         }
 
-        console.log("Buscando evento com ID:", eventoId);
-
         const response = await fetch(`/api/eventos/${eventoId}`);
         await new Promise((resolve) => setTimeout(resolve, 500)); // Simula um pequeno delay (opcional)
 
@@ -46,10 +50,14 @@ export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps
         }
 
         const data = await response.json();
-        console.log("Evento recebido:", data);
         setEvento(data.evento);
       } catch (error) {
         setError(error instanceof Error ? error.message : "Erro desconhecido");
+        toast({
+          title: "Erro",
+          description: "Falha ao carregar evento",
+          variant: "destructive", // Tipo de erro do Toast
+        });
       } finally {
         setLoading(false);
       }
@@ -72,17 +80,25 @@ export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps
           userId,
         }),
       });
-  
-      if (!response.ok) {
-        throw new Error("Erro ao realizar inscrição");
-      }
-  
+
       const data = await response.json();
-      console.log("Inscrição realizada com sucesso:", data);
-      alert("Inscrição realizada com sucesso!");
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erro ao realizar inscrição");
+      }
+
+      toast({
+        title: "Inscrição realizada",
+        description: "Você foi inscrito no evento com sucesso.",
+        variant: "default", // Sucesso do Toast
+      });
     } catch (error) {
-      console.error("Erro ao realizar inscrição:", error);
-      alert("Erro ao realizar inscrição");
+      toast({
+        title: "Erro",
+        description:
+          error instanceof Error ? error.message : "Erro desconhecido",
+        variant: "destructive", // Tipo de erro do Toast
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -110,20 +126,23 @@ export default function EventoDetalhes({ eventoId, userId }: EventoDetalhesProps
           <strong>Descrição:</strong> {evento.descricao}
         </p>
         <p>
-          <strong>Data:</strong> {new Date(evento.dataInicio).toLocaleDateString()}
+          <strong>Data:</strong>{" "}
+          {new Date(evento.dataInicio).toLocaleDateString()}
         </p>
         <p>
-          <strong>Hora de Início:</strong> {new Date(evento.horaInicio).toLocaleTimeString()}
+          <strong>Hora de Início:</strong>{" "}
+          {new Date(evento.horaInicio).toLocaleTimeString()}
         </p>
         <p>
-          <strong>Hora de Término:</strong> {new Date(evento.horaFim).toLocaleTimeString()}
+          <strong>Hora de Término:</strong>{" "}
+          {new Date(evento.horaFim).toLocaleTimeString()}
         </p>
         <p>
           <strong>Local:</strong> {evento.local}
         </p>
         <Button onClick={handleInscricao} disabled={isSubmitting}>
-  {isSubmitting ? "Inscrevendo..." : "Inscrever-se"}
-</Button>
+          {isSubmitting ? "Inscrevendo..." : "Inscrever-se"}
+        </Button>
       </CardContent>
     </Card>
   );

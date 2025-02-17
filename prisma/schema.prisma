@@ -77,7 +77,7 @@ model Evento {
 }
 
 model Inscricao {
-  id            Int      @id @default(autoincrement())
+  id            String      @id @default(cuid())
   userId        String
   eventoId      String   // Alterado para String
   status        String   @default("pendente") // 'pendente', 'confirmada', 'cancelada'
@@ -89,7 +89,7 @@ model Inscricao {
 
 model Presenca {
   id           Int      @id @default(autoincrement())
-  inscricaoId  Int
+  inscricaoId  String
   dataPresenca DateTime @default(now())
   status       String   @default("ausente") // 'presente', 'ausente'
   Inscricao    Inscricao @relation(fields: [inscricaoId], references: [id])
