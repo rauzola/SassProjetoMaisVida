@@ -55,8 +55,8 @@ const data = {
           url: "/eventos",
         },
         {
-          title: "Inscrever",
-          url: "/increver",
+          title: "Presença",
+          url: "/eventos/inscricoes",
         },
         {
           title: "Settings",
