@@ -1,39 +1,39 @@
 // /components/Menu/app-sidebar.tsx
 
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
-  AudioWaveform,
   BookOpen,
   Bot,
-  Command,
   Frame,
   GalleryVerticalEnd,
   Map,
   PieChart,
   Settings2,
   SquareTerminal,
-} from "lucide-react"
+  TentTree,
+} from "lucide-react";
 
-import { NavMain } from "./nav-main"
-import { NavProjects } from "./nav-projects"
-import { NavUser } from "./nav-user"
-import { TeamSwitcher } from "./team-switcher"
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
+import { TeamSwitcher } from "./team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Projeto Mais Vida",
+    email: "site@projetomaisvida.com.br",
+    avatar:
+      "https://images.prismic.io/projetomaisvida/Z5JPe5bqstJ99yTn_icon.png?auto=format,compress",
   },
   teams: [
     {
@@ -41,14 +41,28 @@ const data = {
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },
-   
   ],
   navMain: [
+    {
+      title: "Acampa Corpus Christi",
+      url: "#",
+      icon: TentTree,
+      isActive: true,
+      items: [
+        {
+          title: "Inscrições no Acampa",
+          url: "/acampa-corpus-christi",
+        },
+        {
+          title: "Graficos",
+          url: "/acampa-corpus-christi/graficos",
+        },
+      ],
+    },
     {
       title: "Eventos",
       url: "#",
       icon: SquareTerminal,
-      isActive: true,
       items: [
         {
           title: "Eventos",
@@ -147,7 +161,7 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -164,5 +178,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
