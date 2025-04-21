@@ -147,7 +147,23 @@ export function AcampaInscritos() {
     <span className="font-medium">{value ? 'Sim' : 'Não'}</span>
   );
 
-  const formatDate = (date: Date) => new Date(date).toLocaleDateString('pt-BR');
+  const formatDate = (date: Date) => 
+    new Date(date).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+  
+  const formatDateTime = (date: Date) => {
+    const utcDate = typeof date === 'string' ? new Date(date + 'Z') : new Date(date);
+    
+    return utcDate.toLocaleString('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+  };
 
   const formatTime = (ms: number) => {
     const minutes = Math.floor(ms / 60000);
@@ -337,7 +353,7 @@ export function AcampaInscritos() {
                           <span className="text-slate-400">-</span>
                         )}
                       </TableCell>
-                      <TableCell className="py-3 px-4 text-slate-700">{formatDate(campista.createdAt)}</TableCell>
+                      <TableCell className="py-3 px-4 text-slate-700">{formatDateTime(campista.createdAt)}</TableCell>
                     </TableRow>
                   );
                 })
