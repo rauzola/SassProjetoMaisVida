@@ -17,11 +17,12 @@ datasource db {
 
 model User {
   id                        String   @id @default(cuid())
+  email                     String   @unique
+  password                  String
+  Sessions                  Sessions[]
   status                    String   @default("ativo") // 'ativo', 'inativo'
   nome                      String
-  email                     String   @unique
   cpf                       String   @unique
-  password                  String
   data_nascimento           DateTime
   estado_civil              String
   profissao                 String
@@ -33,7 +34,6 @@ model User {
   data_criacao              DateTime @default(now())
   Saude                     Saude?
   Inscricoes                Inscricao[]
-  Sessions                  Sessions[]
   ComunidadeId              Int?
   Comunidade                Comunidade? @relation(fields: [ComunidadeId], references: [id])
 }
