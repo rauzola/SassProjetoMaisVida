@@ -53,10 +53,10 @@ const data = {
           title: "Inscrições no Acampa",
           url: "/acampa-corpus-christi",
         },
-        {
-          title: "Graficos",
-          url: "/acampa-corpus-christi/graficos",
-        },
+        // {
+        //   title: "Graficos",
+        //   url: "/acampa-corpus-christi/graficos",
+        // },
       ],
     },
     // {
