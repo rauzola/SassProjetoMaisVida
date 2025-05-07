@@ -1,6 +1,6 @@
-// /app/acampa-corpus-christi/page.tsx
+// /app/acampa-corpus-christi/lista-servos/page.tsx
 
-import { AcampaInscritos } from "@/components/Acampa/Inscricoes/indes";
+import { AcampaListaServos } from "@/components/Acampa/Inscricoes/ListaServos";
 import { AppSidebar } from "@/components/Menu/app-sidebar";
 import {
   Breadcrumb,
@@ -53,7 +53,7 @@ export default async function acampacorpuschristi() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Acampa Corpus Christi</BreadcrumbPage>
+                  <BreadcrumbPage>Lista de Servos | Acampa Corpus Christi</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -61,7 +61,7 @@ export default async function acampacorpuschristi() {
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-            <AcampaInscritos />
+            <AcampaListaServos />
           </div>
         </div>
       </SidebarInset>
