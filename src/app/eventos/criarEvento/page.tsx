@@ -1,6 +1,6 @@
 // /app/eventos/criarEvento/page.tsx
 
-import { EventoCriar } from "@/components/Eventos/EventoCriar";
+import EventoCriar from "@/components/Eventos/EventoCriar";
 import { AppSidebar } from "@/components/Menu/app-sidebar";
 import {
   Breadcrumb,
@@ -42,7 +42,7 @@ export default async function CriarEvento() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-width transition-heightease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />

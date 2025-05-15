@@ -63,25 +63,25 @@ const data = {
         },
       ],
     },
-    // {
-    //   title: "Eventos",
-    //   url: "#",
-    //   icon: SquareTerminal,
-    //   items: [
-    //     {
-    //       title: "Eventos",
-    //       url: "/eventos",
-    //     },
-    //     {
-    //       title: "Presença",
-    //       url: "/eventos/inscricoes",
-    //     },
-    //     {
-    //       title: "Settings",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
+    {
+      title: "Eventos (Não Entrar)",
+      url: "#",
+      icon: SquareTerminal,
+      items: [
+        {
+          title: "Eventos",
+          url: "/eventos",
+        },
+        {
+          title: "Presença",
+          url: "/eventos/inscricoes",
+        },
+        {
+          title: "Settings",
+          url: "#",
+        },
+      ],
+    },
     // {
     //   title: "Models",
     //   url: "#",
