@@ -68,7 +68,8 @@ export function EventosListar() {
   const formatDateTime = (dateString: string) => {
     try {
       return format(parseISO(dateString), "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
-    } catch (e) {
+    } catch (error) {
+      console.error('Error formatting date:', error);
       return dateString;
     }
   };
@@ -76,7 +77,8 @@ export function EventosListar() {
   const formatTime = (timeString: string) => {
     try {
       return format(parseISO(timeString), "HH:mm", { locale: ptBR });
-    } catch (e) {
+    } catch (error) {
+      console.error('Error formatting time:', error);
       return timeString;
     }
   };
